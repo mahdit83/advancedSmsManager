@@ -1,0 +1,84 @@
+apply plugin: 'com.android.library'
+
+apply plugin: 'com.android.library'
+
+def majorNumber = 1
+def minorNumber = 0
+def patchNumber = 0
+
+def _versionCode = 100 * majorNumber + 100 * minorNumber + patchNumber
+def _versionName = "$majorNumber" + "." + "$minorNumber" + "." + "$patchNumber"
+
+def devId = 'mahdi'
+def devName = 'Mahdi Tajik'
+def devEmail = 'mahdi.tajik@gmail.com'
+def libGroup = 'ir.mtajik'
+def libName = 'advancedSmsManager'
+def libDescription = 'Advanced SMS manager for single and two sim-card phones'
+def libUrl = 'https://github.com/mahdit83/SmsManagerLib'
+def libGitUrl = "$libUrl" + ".git"
+def licName = 'The Apache Software License, Version 2.0'
+def licType = ["Apache-2.0"]
+def licUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+
+ext {
+    bintrayRepo = 'maven'
+    bintrayName = "$libName"
+
+    publishedGroupId = "$libGroup"
+    libraryName = "$libName"
+    artifact = "$libName"
+
+    libraryDescription = "$libDescription"
+
+    siteUrl = "$libUrl"
+    gitUrl = "$libGitUrl"
+
+    libraryVersion = "$_versionName"
+
+    developerId = "$devId"
+    developerName = "$devName"
+    developerEmail = "$devEmail"
+
+    licenseName = "$licName"
+    licenseUrl = "$licUrl"
+    allLicenses = licType
+}
+
+android {
+    compileSdkVersion 25
+    buildToolsVersion "25.0.3"
+
+    defaultConfig {
+        minSdkVersion 14
+        targetSdkVersion 25
+        versionCode _versionCode
+        versionName "$_versionName"
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    compile 'com.android.support:appcompat-v7:25.3.1'
+    testCompile 'junit:junit:4.12'
+
+    compile 'com.google.dagger:dagger:2.7'
+    annotationProcessor 'com.google.dagger:dagger-compiler:2.7'
+}
+
+// Place it at the end of the file
+apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/installv1.gradle'
+apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/bintrayv1.gradle'
+
