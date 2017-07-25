@@ -11,14 +11,18 @@ import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.Toast;
+
+import ir.mtajik.android.advancedsmsmanager.SmsHandler;
+import ir.mtajik.android.advancedsmsmanager.model.MySmsManager;
 
 
 public class MainActivity extends AppCompatActivity {
 
     public static final String SMS_NUMBER = "09121311509";
     public static final String DIALOG_MESSAGE = "Send sms to confirm your phone";
-    public static final String SMS_BODY = "confirm code";
+    public static final String SMS_BODY = "Hi ali.";
     private static final int PERMISSION_CALLBACK_CONSTANT = 100;
     private static final int REQUEST_PERMISSION_SETTING = 101;
     String[] permissionsRequired = new String[]{Manifest.permission.SEND_SMS,
@@ -108,6 +112,49 @@ public class MainActivity extends AppCompatActivity {
 
     private void proceedAfterPermission() {
 
+        final SmsHandler smsHandler = new SmsHandler(this, SMS_NUMBER, R.layout.my_sms_dialog);
+        smsHandler.sendSms(DIALOG_MESSAGE, SMS_BODY, new MySmsManager.SMSManagerCallBack() {
+            @Override
+            public void afterSuccessfulSMS(int smsId) {
+                smsHandler.sendSms("second sms", "how do you do?", new MySmsManager.SMSManagerCallBack() {
+                    @Override
+                    public void afterSuccessfulSMS(int smsId) {
+                        Toast.makeText(MainActivity.this, "second was send successfully", Toast
+                                .LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void afterDelivered(int smsId) {
+
+                    }
+
+                    @Override
+                    public void afterUnSuccessfulSMS(int smsId, String message) {
+
+                    }
+
+                    @Override
+                    public void onCarrierNameNotMatch(int smsId, String message) {
+
+                    }
+                });
+            }
+
+            @Override
+            public void afterDelivered(int smsId) {
+                Log.i("mahd", "afterDelivered: ");
+            }
+
+            @Override
+            public void afterUnSuccessfulSMS(int smsId, String message) {
+                Log.i("mahd", "afterUnSuccessfulSMS: " + message);
+            }
+
+            @Override
+            public void onCarrierNameNotMatch(int smsId, String message) {
+                Log.i("mahd", "onCarrierNameNotMatch: ");
+            }
+        });
     }
 
     private void handlePermissions() {
