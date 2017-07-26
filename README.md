@@ -1,5 +1,6 @@
 # advancedSmsManager
-Advanced SmsManager is library for sending sms for single and two sim-card phones. it is very handy and usefull. for using in android studio add this to your dependency:
+Advanced SmsManager is library for sending sms for single and two sim-card phones. it is very handy and usefull. 
+For using in android studio add this to your dependency:
 
            compile 'ir.mtajik.android:advancedsmsmanager:1.0.1'                    
 
@@ -8,7 +9,7 @@ It created with MVP architecture and Uses Dagger2 as DI container with these dep
            compile 'com.google.dagger:dagger:2.7'
            annotationProcessor 'com.google.dagger:dagger-compiler:2.7'
            
-So if you use dagger2 make shure that use compatible dependencies.
+So if you use dagger2 make sure that use compatible dependencies.
     
 before using SmsHandler you had to permit user with 'Manifest.permission.SEND_SMS' and 'Manifest.permission.READ_PHONE_STATE' . 
 after that simply call sendSms that have a Interface for all callbacks.
