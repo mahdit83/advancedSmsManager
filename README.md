@@ -13,4 +13,4 @@ If you pass a dialog layout to SmsHandler, it will show your cutom dialog to con
 
 I hope this library would be useful and wait for your comments.
 
-this my weblog: http://www.mtajik.ir
+this my weblog: http://www.mahditajik.ir
