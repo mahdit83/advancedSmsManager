@@ -1,6 +1,5 @@
 package ir.mtajik.android.advancedsmsmanager;
 
-import android.Manifest;
 import android.content.Context;
 import android.support.annotation.Nullable;
 
@@ -30,18 +29,17 @@ public class SmsHandler {
      * permit user with Manifest.permission.SEND_SMS and
      * Manifest.permission.READ_PHONE_STATE .
      *
-     * @param context for context
-     * @param smsNumber for destination number
-     *
-     *
+     * @param context      for context
+     * @param smsNumber    for destination number
      * @param dialogLayout if you pass the custom layout with two {@link android.widget.Button}
      *                     that should have these ids with your desired style:
-     *
+     *                     <p>
      *                     send_button
      *                     cancel_button
-     *
-     * it will use your custom layout to show user for sending sms.
-     *                     if you pass 0 as dialogLayout, advancedSmsManager will inflate is own simple layout.
+     *                     <p>
+     *                     it will use your custom layout to show user for sending sms.
+     *                     if you pass 0 as dialogLayout, advancedSmsManager will inflate is own
+     *                     simple layout.
      */
     public SmsHandler(Context
                               context, String smsNumber, @Nullable Integer dialogLayout) {
