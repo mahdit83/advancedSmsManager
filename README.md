@@ -1,4 +1,4 @@
-# advancedSmsManager
+# Advanced Sms Manager
 Advanced SmsManager is library for sending sms for single and two sim-card phones. it is very handy and usefull. 
 For using in android studio add this to your dependency:
 
@@ -36,7 +36,7 @@ You can also set a Carrier Filter to make sure send sms from Specific carrier an
             }
         });
 
-If you pass a dialog layout to SmsHandler, you can pass 0 as dialogLayoutId but if you pass a one, it will show your custom dialog to confirm Send sms to user. but you should have two Android Button with these id in you layout:
+If you pass a dialog layout to SmsHandler it will show your custom dialog to confirm Send sms to user, if you don't want just pass 0 as dialogLayoutId. your custom dialog should have two Android Button with these id in you layout:
 
     
            <Button
