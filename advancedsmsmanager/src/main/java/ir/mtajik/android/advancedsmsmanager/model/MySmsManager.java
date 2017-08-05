@@ -85,29 +85,27 @@ public class MySmsManager {
                         break;
 
                     case SmsManager.RESULT_ERROR_GENERIC_FAILURE:
-                        Toast.makeText(context, "خطا در ارسال", Toast.LENGTH_SHORT).show();
                         context.unregisterReceiver(this);
                         if (mySmsManagerCallBack != null)
-                            mySmsManagerCallBack.afterUnSuccessfulSMS(smsId, "خطا در ارسال");
+                            mySmsManagerCallBack.afterUnSuccessfulSMS(smsId, "Generic failure");
                         break;
 
                     case SmsManager.RESULT_ERROR_NO_SERVICE:
                         context.unregisterReceiver(this);
                         if (mySmsManagerCallBack != null)
-                            mySmsManagerCallBack.afterUnSuccessfulSMS(smsId, "عدم وجود سرویس شبکه");
+                            mySmsManagerCallBack.afterUnSuccessfulSMS(smsId, "No service");
                         break;
 
                     case SmsManager.RESULT_ERROR_NULL_PDU:
                         context.unregisterReceiver(this);
                         if (mySmsManagerCallBack != null)
-                            mySmsManagerCallBack.afterUnSuccessfulSMS(smsId, " PDU خطای ");
+                            mySmsManagerCallBack.afterUnSuccessfulSMS(smsId, "Null PDU");
                         break;
 
                     case SmsManager.RESULT_ERROR_RADIO_OFF:
                         context.unregisterReceiver(this);
                         if (mySmsManagerCallBack != null)
-                            mySmsManagerCallBack.afterUnSuccessfulSMS(smsId, "عدم وجود ارتباط " +
-                                    "رادیویی");
+                            mySmsManagerCallBack.afterUnSuccessfulSMS(smsId, "Radio off");
                         break;
 
                 }
@@ -128,7 +126,7 @@ public class MySmsManager {
                     case Activity.RESULT_CANCELED:
                         context.unregisterReceiver(this);
                         if (mySmsManagerCallBack != null)
-                            mySmsManagerCallBack.afterUnSuccessfulSMS(smsId, "پیامک به مقصد نرسید");
+                            mySmsManagerCallBack.afterUnSuccessfulSMS(smsId, "SMS not delivered");
 
                         break;
 
@@ -149,11 +147,14 @@ public class MySmsManager {
                         null, message, sentPI, deliveredPI);
 
             } else {
-                mySmsManagerCallBack.onCarrierNameNotMatch(smsId, "you can not send sms for this " +
-                        "app from carrier:" + carrierName);
+                mySmsManagerCallBack.onCarrierNameNotMatch(smsId, "You had to send sms from: "+carrierNameFilter);
             }
         } else {
-            sms.sendTextMessage(sms_number, null, message, sentPI, deliveredPI);
+            if (checkCarrierNameFilter()) {
+                sms.sendTextMessage(sms_number, null, message, sentPI, deliveredPI);
+            }else{
+                mySmsManagerCallBack.onCarrierNameNotMatch(smsId, "You had to send sms from: "+carrierNameFilter);
+            }
         }
 
     }
