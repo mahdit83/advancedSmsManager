@@ -19,7 +19,6 @@ public class SmsHandler {
     @Inject
     SendSmsView view;
 
-    private boolean isNeedDialog;
     private Context context;
     private String smsNumber;
     private int dialogLayout;
@@ -61,6 +60,12 @@ public class SmsHandler {
         DaggerSmsManagerComponent.builder().smsManagerModule(new SmsManagerModule(dialogLayout,
                 smsNumber, context)).build().inject(this);
 
+
+    }
+
+    public void setCarrierNameFilter(String carrierNameFilter) {
+
+        presenter.setCarrierNameFilter(carrierNameFilter);
 
     }
 }

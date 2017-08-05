@@ -22,4 +22,6 @@ public interface SendSmsPresenter {
 
     void setView(SendSmsView view);
 
+    void setCarrierNameFilter(String filter);
+
 }

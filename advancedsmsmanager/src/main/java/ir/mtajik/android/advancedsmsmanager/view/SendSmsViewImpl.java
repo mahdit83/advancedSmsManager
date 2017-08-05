@@ -49,22 +49,22 @@ public class SendSmsViewImpl implements SendSmsView {
         titleText.setText("Chose witch sim card to send sms");
 
         Button sim1Button = (Button) dialogView.findViewById(R.id.sim1_button);
+        sim1Button.setText("1. "+sim1CarrierName);
         sim1Button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                showLoading();
                 presenter.sendSmsFromSubscriptionId(0);
                 simChoseDialog.dismiss();
             }
         });
 
         Button sim2Button = (Button) dialogView.findViewById(R.id.sim2_button);
+        sim2Button.setText("2. "+sim2CarrierName);
         sim2Button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                hideLoading();
                 presenter.sendSmsFromSubscriptionId(1);
                 simChoseDialog.dismiss();
             }
@@ -137,7 +137,7 @@ public class SendSmsViewImpl implements SendSmsView {
             public void onClick(View v) {
 
                 presenter.prepareSendSms();
-                progressBar.setVisibility(View.VISIBLE);
+
             }
         });
 
@@ -147,7 +147,7 @@ public class SendSmsViewImpl implements SendSmsView {
             public void onClick(View v) {
 
                 presenter.cancelSendSms();
-                progressBar.setVisibility(View.VISIBLE);
+
             }
         });
 

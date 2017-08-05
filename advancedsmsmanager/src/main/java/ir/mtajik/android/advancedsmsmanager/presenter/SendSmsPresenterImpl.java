@@ -17,8 +17,8 @@ import ir.mtajik.android.advancedsmsmanager.view.SendSmsView;
 
 public class SendSmsPresenterImpl implements SendSmsPresenter {
 
-    private static ArrayList<Integer> cariersICC = new ArrayList<Integer>();
-    private static ArrayList<String> cariersNAME = new ArrayList<String>();
+    private static ArrayList<Integer> carriersICC = new ArrayList<Integer>();
+    private static ArrayList<String> carriersNAME = new ArrayList<String>();
     private static List<SubscriptionInfo> subInfoList = new ArrayList<>();
     static private int mySmsId;
     private SendSmsView view;
@@ -26,6 +26,7 @@ public class SendSmsPresenterImpl implements SendSmsPresenter {
     private String body;
     private SendSmsModel model;
     private MySmsManager.SMSManagerCallBack callBack;
+    private String carrierNameFilter;
 
     public SendSmsPresenterImpl(SendSmsModel model, Context context) {
         this.context = context;
@@ -61,21 +62,27 @@ public class SendSmsPresenterImpl implements SendSmsPresenter {
     @Override
     public void prepareSendSms() {
 
+        if(view!=null){
+
+            view.showLoading();
+        }
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
 
             SubscriptionManager mSubscriptionManager = SubscriptionManager.from(context);
             subInfoList = mSubscriptionManager.getActiveSubscriptionInfoList();
             if (subInfoList != null && subInfoList.size() > 1) {
-                cariersICC.add(0, subInfoList.get(0).getSubscriptionId());
-                cariersICC.add(1, subInfoList.get(1).getSubscriptionId());
-                cariersNAME.add(0, subInfoList.get(0).getCarrierName().toString());
-                cariersNAME.add(1, subInfoList.get(1).getCarrierName().toString());
+                carriersICC.add(0, subInfoList.get(0).getSubscriptionId());
+                carriersICC.add(1, subInfoList.get(1).getSubscriptionId());
+                carriersNAME.add(0, subInfoList.get(0).getCarrierName().toString());
+                carriersNAME.add(1, subInfoList.get(1).getCarrierName().toString());
 
                 view.hideLoading();
-                view.renderSimChooserView(cariersNAME.get(0), cariersNAME.get(1));
+                view.renderSimChooserView(carriersNAME.get(0), carriersNAME.get(1));
 
             } else {
-
+                carriersICC.add(0, subInfoList.get(0).getSubscriptionId());
+                carriersNAME.add(0, subInfoList.get(0).getCarrierName().toString());
                 sendSmsFromSubscriptionId(0);
 
             }
@@ -88,9 +95,13 @@ public class SendSmsPresenterImpl implements SendSmsPresenter {
 
     public void sendSmsFromSubscriptionId(int i) {
 
+        if(view!=null){
 
-        sendSmsForNewPhones(mySmsId, body, subInfoList.size(), i, ((cariersNAME.size() > 1) ?
-                cariersNAME.get(i) : ""), callBack);
+            view.showLoading();
+        }
+
+        sendSmsForNewPhones(mySmsId, body, subInfoList.size(), i, ((carriersNAME.size() > 0) ?
+                carriersNAME.get(i) : ""), callBack);
     }
 
     @Override
@@ -118,7 +129,7 @@ public class SendSmsPresenterImpl implements SendSmsPresenter {
                                              callBack) {
 
         model.generateSMSForMultiSimCards(smsId, body, carrierSlutCount, carrierSlutNum,
-                carrierName,
+                carrierName, carrierNameFilter,
                 new MySmsManager.SMSManagerCallBack() {
                     @Override
                     public void afterSuccessfulSMS(int smsId) {
@@ -158,10 +169,8 @@ public class SendSmsPresenterImpl implements SendSmsPresenter {
     }
 
     private void sendSmsForOldPhones() {
-        TelephonyManager telephonyManager = ((TelephonyManager) context.getSystemService
-                (Context.TELEPHONY_SERVICE));
 
-        model.generateSMSForSingleSimCard(mySmsId, body, new MySmsManager.SMSManagerCallBack() {
+        model.generateSMSForSingleSimCard(mySmsId, body, carrierNameFilter,new MySmsManager.SMSManagerCallBack() {
             @Override
             public void afterSuccessfulSMS(int smsId) {
                 // if need to some override
@@ -194,4 +203,9 @@ public class SendSmsPresenterImpl implements SendSmsPresenter {
         this.context = context;
     }
 
+
+    @Override
+    public void setCarrierNameFilter(String carrierNameFilter) {
+        this.carrierNameFilter = carrierNameFilter;
+    }
 }
