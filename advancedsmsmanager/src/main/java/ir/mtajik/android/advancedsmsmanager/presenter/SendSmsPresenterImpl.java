@@ -27,6 +27,7 @@ public class SendSmsPresenterImpl implements SendSmsPresenter {
     private SendSmsModel model;
     private MySmsManager.SMSManagerCallBack callBack;
     private String carrierNameFilter;
+    private List<Integer> smsIdList = new ArrayList<>();
 
     public SendSmsPresenterImpl(SendSmsModel model, Context context) {
         this.context = context;
@@ -50,7 +51,12 @@ public class SendSmsPresenterImpl implements SendSmsPresenter {
         this.callBack = callback;
         this.body = body;
         Random rand = new Random();
-        this.mySmsId = rand.nextInt(3000 - 1) + 1; //random id between 1 and 3000
+        int smsId = rand.nextInt(3000 - 1) + 1; //random id between 1 and 3000
+        while(smsIdList.indexOf(smsId)>=0){
+            smsId = rand.nextInt(3000 - 1) + 1;
+        }
+        this.mySmsId = smsId ;
+        smsIdList.add(smsId);
 
         if (view != null) {
             view.renderView(context, message);

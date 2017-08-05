@@ -114,7 +114,7 @@ public class MainActivity extends AppCompatActivity {
         final SmsHandler smsHandler = new SmsHandler(this, SMS_NUMBER, R.layout.my_sms_dialog);
 
         // you can add optional carrier filter
-//        smsHandler.setCarrierNameFilter("MCI");
+        smsHandler.setCarrierNameFilter("MCI");
 
         smsHandler.sendSms(DIALOG_MESSAGE, SMS_BODY, new MySmsManager.SMSManagerCallBack() {
             @Override
