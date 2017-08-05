@@ -63,6 +63,11 @@ public class SmsHandler {
 
     }
 
+    /**
+     * Carrier name filter works for sdk >21
+     * @param carrierNameFilter
+     */
+
     public void setCarrierNameFilter(String carrierNameFilter) {
 
         presenter.setCarrierNameFilter(carrierNameFilter);

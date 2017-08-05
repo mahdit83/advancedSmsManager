@@ -179,12 +179,20 @@ public class SendSmsPresenterImpl implements SendSmsPresenter {
         model.generateSMSForSingleSimCard(mySmsId, body, carrierNameFilter,new MySmsManager.SMSManagerCallBack() {
             @Override
             public void afterSuccessfulSMS(int smsId) {
+
+                if (mySmsId == smsId && view != null) {
+                    view.endView();
+                }
                 // if need to some override
                 callBack.afterSuccessfulSMS(smsId);
             }
 
             @Override
             public void afterDelivered(int smsId) {
+
+                if (mySmsId == smsId && view != null) {
+                    view.endView();
+                }
                 // if need to some override
                 callBack.afterDelivered(smsId);
 
@@ -192,6 +200,11 @@ public class SendSmsPresenterImpl implements SendSmsPresenter {
 
             @Override
             public void afterUnSuccessfulSMS(int smsId, String message) {
+
+                if (mySmsId == smsId && view != null) {
+                    view.endView();
+                }
+
                 // if need to some override
                 callBack.afterUnSuccessfulSMS(smsId, message);
 
