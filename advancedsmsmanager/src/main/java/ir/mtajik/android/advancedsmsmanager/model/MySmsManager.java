@@ -1,4 +1,5 @@
 package ir.mtajik.android.advancedsmsmanager.model;
+
 import android.app.Activity;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
@@ -6,7 +7,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.telephony.SmsManager;
-import android.widget.Toast;
 
 
 public class MySmsManager {
@@ -57,7 +57,7 @@ public class MySmsManager {
 
     public void initializeSmsManager(String body, int carrierSlotCount, int carrierSlotNumber,
                                      String
-            cariername) {
+                                             cariername) {
         this.carrierSlotNumber = carrierSlotNumber;
         this.carrierName = cariername;
         this.mBody = body;
@@ -139,24 +139,29 @@ public class MySmsManager {
 
         //even selected carrier Slot is 0 if there is more than one carier ( means 2 sim) it shoud
         // use first method to send sms.
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP_MR1
-                && carrierSlotCount > 1) {
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP_MR1) {
 
             if (checkCarrierNameFilter()) {
-                sms.getSmsManagerForSubscriptionId(subscriptionId).sendTextMessage(sms_number,
-                        null, message, sentPI, deliveredPI);
+
+                if( carrierSlotCount > 1){
+                    sendSms(message, sentPI, deliveredPI, sms.getSmsManagerForSubscriptionId(subscriptionId));
+                }else{
+                    sendSms(message, sentPI, deliveredPI, sms);
+                }
 
             } else {
-                mySmsManagerCallBack.onCarrierNameNotMatch(smsId, "You had to send sms from: "+carrierNameFilter);
+                mySmsManagerCallBack.onCarrierNameNotMatch(smsId, "You had to send sms from: " +
+                        carrierNameFilter);
             }
         } else {
-            if (checkCarrierNameFilter()) {
-                sms.sendTextMessage(sms_number, null, message, sentPI, deliveredPI);
-            }else{
-                mySmsManagerCallBack.onCarrierNameNotMatch(smsId, "You had to send sms from: "+carrierNameFilter);
-            }
+            sendSms(message, sentPI, deliveredPI, sms);
+
         }
 
+    }
+
+    private void sendSms(String message, PendingIntent sentPI, PendingIntent deliveredPI, SmsManager sms) {
+        sms.sendTextMessage(sms_number, null, message, sentPI, deliveredPI);
     }
 
     private boolean checkCarrierNameFilter() {
