@@ -1,0 +1,6 @@
+<resources>
+    <declare-styleable name="Persian">
+        <attr name="customTypeface" format="string" />
+        <attr name="withSeparator" format="boolean" />
+    </declare-styleable>
+</resources>
