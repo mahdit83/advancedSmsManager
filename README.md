@@ -36,7 +36,7 @@ You can also set a Carrier Filter to make sure sms will sends from Specific carr
             }
         });
 
-If you pass a dialog layout to SmsHandler it will show your custom dialog to confirm Send sms to user, if you don't want just pass 0 as dialogLayoutId. your custom dialog should have two Android Button with these id in you layout:
+If you pass a dialog layout to SmsHandler it will show your custom dialog to confirm Send sms to user, if you don't want just pass 0 as dialogLayoutId. Your custom dialog should have two Android Button or custom button extends #android.widget.Button with these id in you layout:
 
     
            <Button
@@ -56,4 +56,4 @@ It created with MVP architecture and Uses Dagger2 as DI container with these dep
            
 So if you use dagger2 make sure that use compatible dependencies. I hope this library would be useful and wait for your comments.
 
-this my weblog: http://www.mahditajik.ir
+This my weblog: http://www.mahditajik.ir
