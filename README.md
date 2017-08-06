@@ -5,7 +5,7 @@ For using in android studio add this to your dependency:
            compile 'ir.mtajik.android:advancedsmsmanager:1.0.4'                    
 
     
-Before using SmsHandler you had to permit user with 'Manifest.permission.SEND_SMS' and 'Manifest.permission.READ_PHONE_STATE' . 
+Before using SmsHandler you had to permit user with `Manifest.permission.SEND_SMS` and `Manifest.permission.READ_PHONE_STATE` . 
 after that simply call sendSms that have a Interface for all callbacks. smsId is a random unique auto generated Id that generated for every single sms that created by your app.
 You can also set a Carrier Filter to make sure sms will sends from Specific carrier and it is optional.         
 
