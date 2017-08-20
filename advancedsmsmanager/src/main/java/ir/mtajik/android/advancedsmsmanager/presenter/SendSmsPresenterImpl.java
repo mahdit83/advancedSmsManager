@@ -107,7 +107,7 @@ public class SendSmsPresenterImpl implements SendSmsPresenter {
             view.showLoading();
         }
 
-        sendSmsForNewPhones(mySmsId, body, subInfoList.size(), i, ((carriersNAME.size() > 0) ?
+        sendSmsForNewPhones(mySmsId, body, subInfoList.size(), carriersICC.get(i), ((carriersNAME.size() > 0) ?
                 carriersNAME.get(i) : ""), callBack);
     }
 

@@ -99,7 +99,7 @@ public class SmsHandler {
          * and a TextView with id: dialog_title
          * and a ProgressBar with id: progressBar_total
          */
-        public Builder withCustomDialog(Integer sendSmsCustomDialogId) {
+        public Builder withCustomDialogForSendSms(Integer sendSmsCustomDialogId) {
             this.sendSmsCustomDialogId = sendSmsCustomDialogId;
             return this;
         }
@@ -112,7 +112,7 @@ public class SmsHandler {
          * and a TextView with id: dialog_title
          * and a ProgressBar with id: progressBar_total
          */
-        public Builder withChoseSimCustomDialog(Integer choseSimCustomDialogId) {
+        public Builder withCustomDialogForChoseSim(Integer choseSimCustomDialogId) {
             this.choseSimCustomDialogId = choseSimCustomDialogId;
             return this;
         }

@@ -113,92 +113,35 @@ public class MainActivity extends AppCompatActivity {
 
         SmsHandler.builder(this, SMS_NUMBER)
                 .needToShowDialog(true)
-                .withCarrierNameFilter("MCI")
-                .withCustomDialog(R.layout.my_sms_dialog)
+//                .withCarrierNameFilter("MCI")
+                .needToShowDialog(false)
                 .build().sendSms(DIALOG_MESSAGE, SMS_BODY, new MySmsManager.SMSManagerCallBack() {
             @Override
             public void afterSuccessfulSMS(int smsId) {
-
+                Toast.makeText(MainActivity.this, "afterSuccessfulSMS!", Toast
+                        .LENGTH_SHORT).show();
             }
 
             @Override
             public void afterDelivered(int smsId) {
-
+                Toast.makeText(MainActivity.this, "afterDelivered!", Toast
+                        .LENGTH_SHORT).show();
             }
 
             @Override
             public void afterUnSuccessfulSMS(int smsId, String message) {
-
+                Toast.makeText(MainActivity.this, "afterUnSuccessfulSMS: "+message, Toast
+                        .LENGTH_SHORT).show();
             }
 
             @Override
             public void onCarrierNameNotMatch(int smsId, String message) {
-
+                Toast.makeText(MainActivity.this, "onCarrierNameNotMatch: "+message, Toast
+                        .LENGTH_SHORT).show();
             }
         });
 
-//        final SmsHandler smsHandler = new SmsHandler(this, SMS_NUMBER, R.layout.my_sms_dialog);
-
-        // you can add optional carrier filter
-//        smsHandler.setCarrierNameFilter("MCI");
-
-//        smsHandler.setNeedDialog(false);
-//
-//        smsHandler.sendSms(DIALOG_MESSAGE, SMS_BODY, new MySmsManager.SMSManagerCallBack() {
-//            @Override
-//            public void afterSuccessfulSMS(int smsId) {
-//
-//                Toast.makeText(MainActivity.this, "first sms was send successfully", Toast
-//                        .LENGTH_SHORT).show();
-//
-//                //send second sms after first one sent
-//                smsHandler.sendSms("second sms", "how do you do?", new MySmsManager
-//                        .SMSManagerCallBack() {
-//                    @Override
-//                    public void afterSuccessfulSMS(int smsId) {
-//                        Toast.makeText(MainActivity.this, "second was send successfully", Toast
-//                                .LENGTH_SHORT).show();
-//                    }
-//
-//                    @Override
-//                    public void afterDelivered(int smsId) {
-//
-//                        Toast.makeText(MainActivity.this, "second message delivered!", Toast
-//                                .LENGTH_SHORT).show();
-//                    }
-//
-//                    @Override
-//                    public void afterUnSuccessfulSMS(int smsId, String message) {
-//
-//                        Toast.makeText(MainActivity.this, message, Toast.LENGTH_SHORT).show();
-//                    }
-//
-//                    @Override
-//                    public void onCarrierNameNotMatch(int smsId, String message) {
-//
-//                        Toast.makeText(MainActivity.this, message, Toast.LENGTH_SHORT).show();
-//
-//                    }
-//                });
-//            }
-//
-//            @Override
-//            public void afterDelivered(int smsId) {
-//
-//                Toast.makeText(MainActivity.this, "first message delivered!", Toast.LENGTH_SHORT)
-//                        .show();
-//            }
-//
-//            @Override
-//            public void afterUnSuccessfulSMS(int smsId, String message) {
-//                Toast.makeText(MainActivity.this, message, Toast.LENGTH_SHORT).show();
-//            }
-//
-//            @Override
-//            public void onCarrierNameNotMatch(int smsId, String message) {
-//                Toast.makeText(MainActivity.this, message, Toast.LENGTH_SHORT).show();
-//            }
-//        });
+;
     }
 
     private void handlePermissions() {
