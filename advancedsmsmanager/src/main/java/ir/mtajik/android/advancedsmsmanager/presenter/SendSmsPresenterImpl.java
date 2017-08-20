@@ -4,7 +4,6 @@ import android.content.Context;
 import android.os.Build;
 import android.telephony.SubscriptionInfo;
 import android.telephony.SubscriptionManager;
-import android.telephony.TelephonyManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +27,7 @@ public class SendSmsPresenterImpl implements SendSmsPresenter {
     private MySmsManager.SMSManagerCallBack callBack;
     private String carrierNameFilter;
     private List<Integer> smsIdList = new ArrayList<>();
+    private boolean needDialog = true;
 
     public SendSmsPresenterImpl(SendSmsModel model, Context context) {
         this.context = context;
@@ -52,23 +52,26 @@ public class SendSmsPresenterImpl implements SendSmsPresenter {
         this.body = body;
         Random rand = new Random();
         int smsId = rand.nextInt(3000 - 1) + 1; //random id between 1 and 3000
-        while(smsIdList.indexOf(smsId)>=0){
+        while (smsIdList.indexOf(smsId) >= 0) {
             smsId = rand.nextInt(3000 - 1) + 1;
         }
-        this.mySmsId = smsId ;
+        this.mySmsId = smsId;
         smsIdList.add(smsId);
 
-        if (view != null) {
-            view.renderView(context, message);
+        if (needDialog) {
+            if (view != null) {
+                view.renderView(context, message);
+            }
+        } else {
+            prepareSendSms();
         }
-
 
     }
 
     @Override
     public void prepareSendSms() {
 
-        if(view!=null){
+        if (view != null && needDialog) {
 
             view.showLoading();
         }
@@ -84,15 +87,13 @@ public class SendSmsPresenterImpl implements SendSmsPresenter {
                 carriersNAME.add(1, subInfoList.get(1).getCarrierName().toString());
 
                 view.hideLoading();
-                view.renderSimChooserView(carriersNAME.get(0), carriersNAME.get(1));
+                view.renderSimChooserView(context, carriersNAME.get(0), carriersNAME.get(1));
 
             } else {
                 carriersICC.add(0, subInfoList.get(0).getSubscriptionId());
                 carriersNAME.add(0, subInfoList.get(0).getCarrierName().toString());
                 sendSmsFromSubscriptionId(0);
-
             }
-
 
         } else {
             sendSmsForOldPhones();
@@ -101,7 +102,7 @@ public class SendSmsPresenterImpl implements SendSmsPresenter {
 
     public void sendSmsFromSubscriptionId(int i) {
 
-        if(view!=null){
+        if (view != null && needDialog) {
 
             view.showLoading();
         }
@@ -127,6 +128,17 @@ public class SendSmsPresenterImpl implements SendSmsPresenter {
     public void setView(SendSmsView view) {
 
         this.view = view;
+    }
+
+    @Override
+    public void setCarrierNameFilter(String carrierNameFilter) {
+        this.carrierNameFilter = carrierNameFilter;
+    }
+
+    @Override
+    public void setNeedDialog(boolean ifNeed) {
+
+        this.needDialog = ifNeed;
     }
 
     private void sendSmsForNewPhones(final int smsId, String body, int carrierSlutCount, int
@@ -176,7 +188,8 @@ public class SendSmsPresenterImpl implements SendSmsPresenter {
 
     private void sendSmsForOldPhones() {
 
-        model.generateSMSForSingleSimCard(mySmsId, body, carrierNameFilter,new MySmsManager.SMSManagerCallBack() {
+        model.generateSMSForSingleSimCard(mySmsId, body, carrierNameFilter, new MySmsManager
+                .SMSManagerCallBack() {
             @Override
             public void afterSuccessfulSMS(int smsId) {
 
@@ -220,11 +233,5 @@ public class SendSmsPresenterImpl implements SendSmsPresenter {
 
     public void setContext(Context context) {
         this.context = context;
-    }
-
-
-    @Override
-    public void setCarrierNameFilter(String carrierNameFilter) {
-        this.carrierNameFilter = carrierNameFilter;
     }
 }

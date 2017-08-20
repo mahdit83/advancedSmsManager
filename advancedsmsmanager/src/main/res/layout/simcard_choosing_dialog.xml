@@ -19,8 +19,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-
         <Button
+            android:background="#245678"
             android:id="@+id/sim1_button"
             android:layout_width="120dip"
             android:layout_height="wrap_content"
@@ -28,10 +28,11 @@
             android:gravity="center"
             android:paddingBottom="8dp"
             android:paddingTop="8dp"
-            android:text="sim1"
+            android:text="sim 1"
             android:textColor="@android:color/white"/>
 
         <Button
+            android:background="#245678"
             android:id="@+id/sim2_button"
             android:layout_width="120dip"
             android:layout_height="wrap_content"
@@ -39,8 +40,11 @@
             android:gravity="center"
             android:paddingBottom="8dp"
             android:paddingTop="8dp"
-            android:text="sim2"
+            android:text="sim 2"
             android:textColor="@android:color/white"/>
+
+
+
     </LinearLayout>
 
 

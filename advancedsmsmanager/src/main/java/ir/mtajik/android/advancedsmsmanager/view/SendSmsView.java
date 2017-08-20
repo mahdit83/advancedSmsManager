@@ -5,7 +5,7 @@ public interface SendSmsView {
 
     void renderView(Context context, String message);
 
-    void renderSimChooserView(String sim1CarrierName, String sim2CarrierName);
+    void renderSimChooserView(Context context , String sim1CarrierName, String sim2CarrierName);
 
     void endView();
 
@@ -14,4 +14,8 @@ public interface SendSmsView {
     void showLoading();
 
     void hideLoading();
+
+    void setCustomLayout(int id);
+
+    void setCustomLayoutForTwoSim(int id);
 }
