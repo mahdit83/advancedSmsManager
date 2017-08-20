@@ -11,6 +11,7 @@ import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.Toast;
 
 import ir.mtajik.android.advancedsmsmanager.SmsHandler;
@@ -119,22 +120,22 @@ public class MainActivity extends AppCompatActivity {
                 .build().sendSms(DIALOG_MESSAGE, SMS_BODY, new MySmsManager.SMSManagerCallBack() {
             @Override
             public void afterSuccessfulSMS(int smsId) {
-
+                Log.i("sms", "afterSuccessfulSMS ");
             }
 
             @Override
             public void afterDelivered(int smsId) {
-
+                Log.i("sms", "afterDelivered ");
             }
 
             @Override
             public void afterUnSuccessfulSMS(int smsId, String message) {
-
+                Log.i("sms", "afterUnSuccessfulSMS: "+message);
             }
 
             @Override
             public void onCarrierNameNotMatch(int smsId, String message) {
-
+                Log.i("sms", "onCarrierNameNotMatch: "+message);
             }
         });
 

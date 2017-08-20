@@ -64,7 +64,7 @@ public class SendSmsViewImpl implements SendSmsView {
             @Override
             public void onClick(View v) {
 
-                presenter.sendSmsFromSubscriptionId(0);
+                presenter.sendSmsFromSubscriptionIdIndex(0);
                 simChoseDialog.dismiss();
             }
         });
@@ -75,7 +75,7 @@ public class SendSmsViewImpl implements SendSmsView {
             @Override
             public void onClick(View v) {
 
-                presenter.sendSmsFromSubscriptionId(1);
+                presenter.sendSmsFromSubscriptionIdIndex(1);
                 simChoseDialog.dismiss();
             }
         });

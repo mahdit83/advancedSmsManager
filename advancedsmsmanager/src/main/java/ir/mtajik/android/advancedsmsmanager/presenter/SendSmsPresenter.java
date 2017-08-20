@@ -14,7 +14,7 @@ public interface SendSmsPresenter {
 
     void prepareSendSms();
 
-    void sendSmsFromSubscriptionId(int id);
+    void sendSmsFromSubscriptionIdIndex(int id);
 
     void cancelSendSms();
 

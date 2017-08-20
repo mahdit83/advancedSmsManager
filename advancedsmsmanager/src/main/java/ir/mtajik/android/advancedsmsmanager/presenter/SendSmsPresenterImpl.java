@@ -92,7 +92,7 @@ public class SendSmsPresenterImpl implements SendSmsPresenter {
             } else {
                 carriersICC.add(0, subInfoList.get(0).getSubscriptionId());
                 carriersNAME.add(0, subInfoList.get(0).getCarrierName().toString());
-                sendSmsFromSubscriptionId(carriersICC.get(0));
+                sendSmsFromSubscriptionIdIndex(0);
             }
 
         } else {
@@ -100,7 +100,7 @@ public class SendSmsPresenterImpl implements SendSmsPresenter {
         }
     }
 
-    public void sendSmsFromSubscriptionId(int i) {
+    public void sendSmsFromSubscriptionIdIndex(int i) {
 
         if (view != null && needDialog) {
 
