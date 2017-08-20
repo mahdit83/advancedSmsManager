@@ -11,7 +11,7 @@ After that simply call sendSms that have a Interface for all callbacks. smsId is
 In version 1.0.5 , i implement Builder design pattern. All the ```with``` parameters are optional. 
 ```java
 
-SmsHandler.builder(this, "+989120000000")
+SmsHandler.builder(context, "+989120000000")
                 .withCarrierNameFilter("MCI")
                 .withCustomDialogForSendSms(R.layout.my_sms_dialog)
                 .withCustomDialogForChoseSim(R.layout.simcard_choosing_dialog)
@@ -38,7 +38,7 @@ SmsHandler.builder(this, "+989120000000")
             }
         });
 ```
-If you do not want to ask user for send sms after premitted, put ```.needToShowDialog(false)``` or else leave it and sms confirem dialog will be displayed. Also you can inflate you custom view for both **sendSmsDialog** and **simChoseDialog** but  mention that they must have these component and ids.
+If you do not want to ask user for send sms after premitted, put ```.needToShowDialog(false)``` or else leave it and sms confirem dialog will be displayed. Also you can inflate you custom view for both **sendSmsDialog** and **simChoseDialog** but  mention that they must have these component and ids. ( Extended components from these components are acceptable) 
 
 for **sendSmsDialog**:
 ```xml
