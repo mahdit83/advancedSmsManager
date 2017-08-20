@@ -38,7 +38,7 @@ SmsHandler.builder(context, "+989120000000")
             }
         });
 ```
-If you do not want to ask user for send sms after premitted, put ```.needToShowDialog(false)``` or else leave it and sms confirem dialog will be displayed. Also you can inflate you custom view for both **sendSmsDialog** and **simChoseDialog** but  mention that they must have these component and ids. ( Extended components from these components are acceptable) 
+If you do not want to ask user for send sms after premitted, put ```.needToShowDialog(false)``` or else leave it and sms confirem dialog will be displayed. Mention that sim chose dialog on two sim phones will always diplayed. Also you can inflate you custom view for both **sendSmsDialog** and **simChoseDialog** but  mention that they must have these component and ids. ( Extended components from these components are acceptable) 
 
 for **sendSmsDialog**:
 ```xml
