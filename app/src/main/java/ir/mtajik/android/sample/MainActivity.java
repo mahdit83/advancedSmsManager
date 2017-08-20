@@ -111,37 +111,34 @@ public class MainActivity extends AppCompatActivity {
 
     private void proceedAfterPermission() {
 
-        SmsHandler.builder(this, SMS_NUMBER)
-                .needToShowDialog(true)
-//                .withCarrierNameFilter("MCI")
+        SmsHandler.builder(this, "+989120000000")
+                .withCarrierNameFilter("MCI")
+                .withCustomDialogForSendSms(R.layout.my_sms_dialog)
+                .withCustomDialogForChoseSim(R.layout.simcard_choosing_dialog)
                 .needToShowDialog(false)
                 .build().sendSms(DIALOG_MESSAGE, SMS_BODY, new MySmsManager.SMSManagerCallBack() {
             @Override
             public void afterSuccessfulSMS(int smsId) {
-                Toast.makeText(MainActivity.this, "afterSuccessfulSMS!", Toast
-                        .LENGTH_SHORT).show();
+
             }
 
             @Override
             public void afterDelivered(int smsId) {
-                Toast.makeText(MainActivity.this, "afterDelivered!", Toast
-                        .LENGTH_SHORT).show();
+
             }
 
             @Override
             public void afterUnSuccessfulSMS(int smsId, String message) {
-                Toast.makeText(MainActivity.this, "afterUnSuccessfulSMS: "+message, Toast
-                        .LENGTH_SHORT).show();
+
             }
 
             @Override
             public void onCarrierNameNotMatch(int smsId, String message) {
-                Toast.makeText(MainActivity.this, "onCarrierNameNotMatch: "+message, Toast
-                        .LENGTH_SHORT).show();
+
             }
         });
 
-;
+
     }
 
     private void handlePermissions() {
