@@ -90,7 +90,8 @@ annotationProcessor 'com.google.dagger:dagger-compiler:2.7'
            
 So if you use dagger2 make sure that use compatible dependencies. I hope this library would be useful and wait for your comments.
 
-http://www.mahditajik.ir/wp-content/uploads/2015/03/sample-logo-MT22.png
+
+![Mahdi Tajik](http://www.mahditajik.ir/wp-content/uploads/2015/03/sample-logo-MT22.png)
 
 This is my weblog: http://www.mahditajik.ir
 
