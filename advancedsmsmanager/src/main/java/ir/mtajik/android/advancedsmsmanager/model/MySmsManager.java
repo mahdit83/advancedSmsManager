@@ -8,6 +8,8 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.telephony.SmsManager;
 
+import static android.telephony.SmsManager.getSmsManagerForSubscriptionId;
+
 
 public class MySmsManager {
 
@@ -144,7 +146,7 @@ public class MySmsManager {
             if (checkCarrierNameFilter()) {
 
                 if( carrierSlotCount > 1){
-                    sendSms(message, sentPI, deliveredPI, sms.getSmsManagerForSubscriptionId(subscriptionId));
+                    sendSms(message, sentPI, deliveredPI, getSmsManagerForSubscriptionId(subscriptionId));
                 }else{
                     sendSms(message, sentPI, deliveredPI, sms);
                 }

@@ -11,6 +11,7 @@ import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.Toast;
 
 import ir.mtajik.android.advancedsmsmanager.SmsHandler;
@@ -111,66 +112,34 @@ public class MainActivity extends AppCompatActivity {
 
     private void proceedAfterPermission() {
 
-        final SmsHandler smsHandler = new SmsHandler(this, SMS_NUMBER, R.layout.my_sms_dialog);
-
-        // you can add optional carrier filter
-        smsHandler.setCarrierNameFilter("MCI");
-
-        smsHandler.sendSms(DIALOG_MESSAGE, SMS_BODY, new MySmsManager.SMSManagerCallBack() {
+        SmsHandler.builder(this, "+989120000000")
+                .withCarrierNameFilter("MCI")
+                .withCustomDialogForSendSms(R.layout.my_sms_dialog)
+                .withCustomDialogForChoseSim(R.layout.simcard_choosing_dialog)
+                .needToShowDialog(false)
+                .build().sendSms(DIALOG_MESSAGE, SMS_BODY, new MySmsManager.SMSManagerCallBack() {
             @Override
             public void afterSuccessfulSMS(int smsId) {
-
-                Toast.makeText(MainActivity.this, "first sms was send successfully", Toast
-                        .LENGTH_SHORT).show();
-
-                //send second sms after first one sent
-                smsHandler.sendSms("second sms", "how do you do?", new MySmsManager
-                        .SMSManagerCallBack() {
-                    @Override
-                    public void afterSuccessfulSMS(int smsId) {
-                        Toast.makeText(MainActivity.this, "second was send successfully", Toast
-                                .LENGTH_SHORT).show();
-                    }
-
-                    @Override
-                    public void afterDelivered(int smsId) {
-
-                        Toast.makeText(MainActivity.this, "second message delivered!", Toast
-                                .LENGTH_SHORT).show();
-                    }
-
-                    @Override
-                    public void afterUnSuccessfulSMS(int smsId, String message) {
-
-                        Toast.makeText(MainActivity.this, message, Toast.LENGTH_SHORT).show();
-                    }
-
-                    @Override
-                    public void onCarrierNameNotMatch(int smsId, String message) {
-
-                        Toast.makeText(MainActivity.this, message, Toast.LENGTH_SHORT).show();
-
-                    }
-                });
+                Log.i("sms", "afterSuccessfulSMS ");
             }
 
             @Override
             public void afterDelivered(int smsId) {
-
-                Toast.makeText(MainActivity.this, "first message delivered!", Toast.LENGTH_SHORT)
-                        .show();
+                Log.i("sms", "afterDelivered ");
             }
 
             @Override
             public void afterUnSuccessfulSMS(int smsId, String message) {
-                Toast.makeText(MainActivity.this, message, Toast.LENGTH_SHORT).show();
+                Log.i("sms", "afterUnSuccessfulSMS: "+message);
             }
 
             @Override
             public void onCarrierNameNotMatch(int smsId, String message) {
-                Toast.makeText(MainActivity.this, message, Toast.LENGTH_SHORT).show();
+                Log.i("sms", "onCarrierNameNotMatch: "+message);
             }
         });
+
+
     }
 
     private void handlePermissions() {

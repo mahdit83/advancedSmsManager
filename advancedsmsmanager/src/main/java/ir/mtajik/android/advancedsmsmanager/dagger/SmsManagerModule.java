@@ -19,13 +19,11 @@ import ir.mtajik.android.advancedsmsmanager.view.SendSmsViewImpl;
 public class SmsManagerModule {
 
 
-    private int dialogLayout;
     private String smsNumber;
     private Context context;
 
 
-    public SmsManagerModule(int dialogLayout, String smsNumber, Context context) {
-        this.dialogLayout = dialogLayout;
+    public SmsManagerModule(String smsNumber, Context context) {
         this.context = context;
         this.smsNumber = smsNumber;
     }
@@ -58,6 +56,6 @@ public class SmsManagerModule {
     @Singleton
     @Provides
     SendSmsView providesSendSmsView(SendSmsPresenter presenter) {
-        return new SendSmsViewImpl(presenter, dialogLayout);
+        return new SendSmsViewImpl(presenter);
     }
 }

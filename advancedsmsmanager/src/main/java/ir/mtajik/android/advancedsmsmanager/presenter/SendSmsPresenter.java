@@ -14,7 +14,7 @@ public interface SendSmsPresenter {
 
     void prepareSendSms();
 
-    void sendSmsFromSubscriptionId(int id);
+    void sendSmsFromSubscriptionIdIndex(int id);
 
     void cancelSendSms();
 
@@ -23,5 +23,7 @@ public interface SendSmsPresenter {
     void setView(SendSmsView view);
 
     void setCarrierNameFilter(String filter);
+
+    void setNeedDialog(boolean ifNeed);
 
 }
