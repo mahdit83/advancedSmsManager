@@ -38,8 +38,7 @@ SmsHandler.builder(this, "+989120000000")
             }
         });
 ```
-You can inflate you custom view for both **sendSmsDialog** and **simChoseDialog** but they must have these component and ids:
-If you pass a dialog layout to SmsHandler it will show your custom dialog to confirm Send sms to user, if you don't want just pass 0 as dialogLayoutId. Your custom dialog should have two Android Button or custom button extends **android.widget.Button** with these id in you layout:
+If you do not want to ask user for send sms after premitted, put ```.needToShowDialog(false)``` or else leave it and sms confirem dialog will be displayed. Also you can inflate you custom view for both **sendSmsDialog** and **simChoseDialog** but  mention that they must have these component and ids.
 
 for **sendSmsDialog**:
 ```xml
@@ -82,8 +81,7 @@ and for **simChoseDialog** :
           />
 ```  
 
-It created with MVP architecture and Uses Dagger2 as DI container with these dependencies:
-
+This library created with MVP architecture and Uses Dagger2 as DI container with these dependencies:
 
 ```groovy
 compile 'com.google.dagger:dagger:2.7'
@@ -92,6 +90,8 @@ annotationProcessor 'com.google.dagger:dagger-compiler:2.7'
            
 So if you use dagger2 make sure that use compatible dependencies. I hope this library would be useful and wait for your comments.
 
-this my weblog: http://www.mahditajik.ir
+http://www.mahditajik.ir/wp-content/uploads/2015/03/sample-logo-MT22.png
+
+This is my weblog: http://www.mahditajik.ir
 
 
