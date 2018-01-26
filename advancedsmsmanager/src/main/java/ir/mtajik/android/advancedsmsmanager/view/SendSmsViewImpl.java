@@ -99,8 +99,12 @@ public class SendSmsViewImpl implements SendSmsView {
     @Override
     public void endView() {
 
-        progressBar.setVisibility(View.INVISIBLE);
-        dialog.dismiss();
+        if (progressBar != null) {
+            progressBar.setVisibility(View.INVISIBLE);
+        }
+        if(dialog!=null){
+            dialog.dismiss();
+        }
     }
 
     @Override
