@@ -116,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
                 .withCarrierNameFilter("MCI")
                 .withCustomDialogForSendSms(R.layout.my_sms_dialog)
                 .withCustomDialogForChoseSim(R.layout.simcard_choosing_dialog)
-                .needToShowDialog(false)
+                .needToShowDialog(true)
                 .build().sendSms(DIALOG_MESSAGE, SMS_BODY, new MySmsManager.SMSManagerCallBack() {
             @Override
             public void afterSuccessfulSMS(int smsId) {
