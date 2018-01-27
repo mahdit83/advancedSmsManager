@@ -1,10 +1,8 @@
 apply plugin: 'com.android.library'
 
-apply plugin: 'com.android.library'
-
 def majorNumber = 1
 def minorNumber = 0
-def patchNumber = 5
+def patchNumber = 6
 
 def _versionCode = 100 * majorNumber + 100 * minorNumber + patchNumber
 def _versionName = "$majorNumber" + "." + "$minorNumber" + "." + "$patchNumber"
