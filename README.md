@@ -3,7 +3,7 @@ AdvancedSmsManager is library for sending sms for single and two sim-card phones
 For using in android studio add this to your dependency:
 
 ```groovy
-compile 'ir.mtajik.android:advancedsmsmanager:1.0.5'                    
+compile 'ir.mtajik.android:advancedsmsmanager:1.0.6'                    
 ```
 Before using SmsHandler you had to permit user with `Manifest.permission.SEND_SMS` and `Manifest.permission.READ_PHONE_STATE` . 
     
