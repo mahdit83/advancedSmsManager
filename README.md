@@ -10,9 +10,11 @@ compile 'ir.mtajik.android:advancedsmsmanager:1.1.0'
 ```
 
 **Permissions**
+
 Before using SmsHandler you had to permit user with `Manifest.permission.SEND_SMS` and `Manifest.permission.READ_PHONE_STATE` . 
     
 **Usage**
+
 After that simply call sendSms that have a Interface for all callbacks. smsId is a random unique auto generated Id that generated for every single sms that created by your app.
 In version 1.0.5 , i implement Builder design pattern. All the ```with``` parameters are optional. 
 ```java
@@ -47,6 +49,7 @@ SmsHandler.builder(context, "+989120000000")
 If you do not want to ask user for send sms after premitted, put ```.needToShowSendSmsDialog(false)``` or else leave it and sms confirem dialog will be displayed. 
 
 **Sim-card carrier name filter**
+
 You can set carrier name filter that works for SDK>22 with ````.withCarrierNameFilter("MCI")```` If user going to send sms from carrier that not match your filter ( in one or two sim card phones), the call-back :````onCarrierNameNotMatch()```` will be call.
 
 In new version there is a new feature that you can send Sms from specific carrier and do not show sim-card chosing dialog to user. Mention that sim chose dialog on two sim phones will always diplayed in pre 1.1.0 versions. 
@@ -55,8 +58,9 @@ In new version there is a new feature that you can send Sms from specific carrie
 ````
 This will be check phone sim-cards carrier names in lower-case that contains "mtn". If one exists then sms will send from that carrier without asking from user. If there is no carrier name that matches this filter ````onCarrierNameNotMatch()```` will be call. When you use this option no need for using ````.withCarrierNameFilter()```` option. But if you use both of them the last used properties will override carrierNameFilter.
 
-**Custom Layouts**
-You can  pass custom Layoutparameters for **sendSmsDialog**
+**Custom Parameters**
+
+You can  pass custom Layoutparameters for ````sendSmsDialog````
 ````java
 WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
 layoutParams.width = WindowManager.LayoutParams.MATCH_PARENT;
@@ -66,16 +70,17 @@ layoutParams.dimAmount = 0.6f;
 ````
 And add with ```` .withLayoutParams(layoutParams)````
 
-You can also pass widht or height in dp for **sendSmsDialog** and they will ovveride LayoutParams.
+You can also pass widht or height in dp for ````sendSmsDialog```` and they will ovveride LayoutParams.
 ````java
 .withHeight(200) // 200dp
 .withHeight(800) // 800dp
 ````
 
+**Custom Layouts**
 
 You can inflate you custom view for both **sendSmsDialog** and **simChoseDialog** if they are going to shown. Mention that they must have these component and ids. ( Extended components from these components are acceptable) 
 
-for **sendSmsDialog**:
+for sendSmsDialog:
 ```xml
 <Button
 	android:id="@+id/send_button"
@@ -98,7 +103,7 @@ for **sendSmsDialog**:
 	   />
 ```           
 
-and for **simChoseDialog** :
+and for simChoseDialog :
 ```xml
 <Button
 	android:id="@+id/sim1_button"
@@ -117,6 +122,7 @@ and for **simChoseDialog** :
 ```  
 
 **Dependencies**
+
 This library created with MVP architecture and Uses Dagger2 as DI container with these dependencies:
 
 ```groovy
