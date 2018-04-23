@@ -168,7 +168,7 @@ public class MySmsManager {
 
     private boolean checkCarrierNameFilter() {
         if (carrierNameFilter != null) {
-            if (carrierName.contains(carrierNameFilter)) {
+            if (carrierName.toLowerCase().contains(carrierNameFilter.toLowerCase())) {
                 return true;
             } else {
                 return false;

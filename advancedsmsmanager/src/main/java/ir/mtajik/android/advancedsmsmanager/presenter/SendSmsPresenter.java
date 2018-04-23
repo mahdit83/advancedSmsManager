@@ -24,6 +24,8 @@ public interface SendSmsPresenter {
 
     void setCarrierNameFilter(String filter);
 
-    void setNeedDialog(boolean ifNeed);
+    void setNeedsSendSmsDialog(boolean ifNeeded);
+
+    void setNeedsChoseSimDialog(boolean ifNeeded);
 
 }

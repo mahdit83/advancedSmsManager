@@ -12,6 +12,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 import ir.mtajik.android.advancedsmsmanager.SmsHandler;
@@ -112,11 +113,19 @@ public class MainActivity extends AppCompatActivity {
 
     private void proceedAfterPermission() {
 
-        SmsHandler.builder(this, "+989120000000")
+        WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
+        layoutParams.width = WindowManager.LayoutParams.MATCH_PARENT;
+        layoutParams.height = 100;
+        layoutParams.flags = WindowManager.LayoutParams.FLAG_DIM_BEHIND;
+        layoutParams.dimAmount = 0.5f;
+
+        SmsHandler.builder(this, "+98307399")
                 .withCarrierNameFilter("MCI")
                 .withCustomDialogForSendSms(R.layout.my_sms_dialog)
                 .withCustomDialogForChoseSim(R.layout.simcard_choosing_dialog)
-                .needToShowDialog(true)
+//                .withLayoutParams(layoutParams)
+//                .withHeight(200)
+                .needSendSmsFromSpecificCarrierWithOutAskingUser("irancel")
                 .build().sendSms(DIALOG_MESSAGE, SMS_BODY, new MySmsManager.SMSManagerCallBack() {
             @Override
             public void afterSuccessfulSMS(int smsId) {

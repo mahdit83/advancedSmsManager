@@ -3,6 +3,7 @@ package ir.mtajik.android.advancedsmsmanager.view;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
@@ -23,6 +24,8 @@ public class SendSmsViewImpl implements SendSmsView {
     private Context context;
     private ProgressBar progressBar;
     private int layoutId, twoSimLayoutId;
+    private WindowManager.LayoutParams layoutParams;
+    private int dialogWidth ,dialogHeight;
 
     public SendSmsViewImpl(SendSmsPresenter presenter) {
         this.presenter = presenter;
@@ -134,6 +137,18 @@ public class SendSmsViewImpl implements SendSmsView {
     }
 
     @Override
+    public void setLayoutParam(WindowManager.LayoutParams layoutParams) {
+        this.layoutParams = layoutParams;
+    }
+
+    @Override
+    public void setHeightAndWidth(int height, int width) {
+
+        this.dialogWidth = width;
+        this.dialogHeight = height;
+    }
+
+    @Override
     public void setCustomLayoutForTwoSim(int id) {
 
         this.twoSimLayoutId = id;
@@ -176,16 +191,32 @@ public class SendSmsViewImpl implements SendSmsView {
             }
         });
 
-
         dialog = new Dialog(context);
         dialog.setContentView(dialogView);
 
-        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
-        lp.flags = WindowManager.LayoutParams.FLAG_DIM_BEHIND;
-        lp.dimAmount = 0.5f;
+        if(this.layoutParams == null){
+
+            this.layoutParams = new WindowManager.LayoutParams();
+            this.layoutParams.width = WindowManager.LayoutParams.MATCH_PARENT;
+            this.layoutParams.height = WindowManager.LayoutParams.WRAP_CONTENT;
+            this.layoutParams.flags = WindowManager.LayoutParams.FLAG_DIM_BEHIND;
+            this.layoutParams.dimAmount = 0.5f;
+        }
+
+        if(dialogHeight!=0 ){
+            this.layoutParams.height = dpToPx(dialogHeight);
+        }
+        if(dialogWidth !=0){
+            this.layoutParams.width = dpToPx(dialogWidth);
+        }
+
         dialog.show();
-        dialog.getWindow().setAttributes(lp);
+        dialog.getWindow().setAttributes(layoutParams);
+
+    }
+
+    private int dpToPx(int dp) {
+        DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
+        return Math.round(dp * (displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT));
     }
 }

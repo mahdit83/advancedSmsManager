@@ -27,7 +27,8 @@ public class SendSmsPresenterImpl implements SendSmsPresenter {
     private MySmsManager.SMSManagerCallBack callBack;
     private String carrierNameFilter;
     private List<Integer> smsIdList = new ArrayList<>();
-    private boolean needDialog = true;
+    private boolean needsSendSmsDialog = true;
+    private boolean needsChoseSimDialog = true;
 
     public SendSmsPresenterImpl(SendSmsModel model, Context context) {
         this.context = context;
@@ -58,7 +59,7 @@ public class SendSmsPresenterImpl implements SendSmsPresenter {
         this.mySmsId = smsId;
         smsIdList.add(smsId);
 
-        if (needDialog) {
+        if (needsSendSmsDialog) {
             if (view != null) {
                 view.renderView(context, message);
             }
@@ -71,30 +72,46 @@ public class SendSmsPresenterImpl implements SendSmsPresenter {
     @Override
     public void prepareSendSms() {
 
-        if (view != null && needDialog) {
+        if (view != null && needsSendSmsDialog) {
 
             view.showLoading();
         }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
 
-            SubscriptionManager mSubscriptionManager = SubscriptionManager.from(context);
-            subInfoList = mSubscriptionManager.getActiveSubscriptionInfoList();
-            if (subInfoList != null && subInfoList.size() > 1) {
-                carriersICC.add(0, subInfoList.get(0).getSubscriptionId());
-                carriersICC.add(1, subInfoList.get(1).getSubscriptionId());
-                carriersNAME.add(0, subInfoList.get(0).getCarrierName().toString());
-                carriersNAME.add(1, subInfoList.get(1).getCarrierName().toString());
+            //todo if there is no simcard inserted subInfoList will be null
+            try {
+                SubscriptionManager mSubscriptionManager = SubscriptionManager.from(context);
+                subInfoList = mSubscriptionManager.getActiveSubscriptionInfoList();
+                if (subInfoList != null && subInfoList.size() > 1) {
+                    carriersICC.add(0, subInfoList.get(0).getSubscriptionId());
+                    carriersICC.add(1, subInfoList.get(1).getSubscriptionId());
+                    carriersNAME.add(0, subInfoList.get(0).getCarrierName().toString());
+                    carriersNAME.add(1, subInfoList.get(1).getCarrierName().toString());
 
-                view.hideLoading();
-                view.renderSimChooserView(context, carriersNAME.get(0), carriersNAME.get(1));
+                    view.hideLoading();
+                    if (needsChoseSimDialog) {
+                        view.renderSimChooserView(context, carriersNAME.get(0), carriersNAME.get
+                                (1));
+                    } else {
+                        if (findPositionOfCarrierFilterInCarrierNameList()!=-1) {
+                            sendSmsFromSubscriptionIdIndex(findPositionOfCarrierFilterInCarrierNameList());
+                        } else {
+                            view.showMessage("your selected carrier is not exists.");
+                        }
+                    }
 
-            } else {
-                carriersICC.add(0, subInfoList.get(0).getSubscriptionId());
-                carriersNAME.add(0, subInfoList.get(0).getCarrierName().toString());
-                sendSmsFromSubscriptionIdIndex(0);
+                } else {
+                    carriersICC.add(0, subInfoList.get(0).getSubscriptionId());
+                    carriersNAME.add(0, subInfoList.get(0).getCarrierName().toString());
+                    sendSmsFromSubscriptionIdIndex(0);
+                }
+            } catch (Exception e) {
+                if(view!=null){
+                    view.showMessage("Some things go wrong. Maybe there is no sim-card");
+                    view.hideLoading();
+                }
             }
-
         } else {
             sendSmsForOldPhones();
         }
@@ -102,12 +119,13 @@ public class SendSmsPresenterImpl implements SendSmsPresenter {
 
     public void sendSmsFromSubscriptionIdIndex(int i) {
 
-        if (view != null && needDialog) {
+        if (view != null && needsSendSmsDialog) {
 
             view.showLoading();
         }
 
-        sendSmsForNewPhones(mySmsId, body, subInfoList.size(), carriersICC.get(i), ((carriersNAME.size() > 0) ?
+        sendSmsForNewPhones(mySmsId, body, subInfoList.size(), carriersICC.get(i), ((carriersNAME
+                .size() > 0) ?
                 carriersNAME.get(i) : ""), callBack);
     }
 
@@ -136,9 +154,25 @@ public class SendSmsPresenterImpl implements SendSmsPresenter {
     }
 
     @Override
-    public void setNeedDialog(boolean ifNeed) {
+    public void setNeedsSendSmsDialog(boolean ifNeeded) {
 
-        this.needDialog = ifNeed;
+        this.needsSendSmsDialog = ifNeeded;
+    }
+
+    @Override
+    public void setNeedsChoseSimDialog(boolean ifNeeded) {
+        this.needsChoseSimDialog = ifNeeded;
+    }
+
+    private int findPositionOfCarrierFilterInCarrierNameList() {
+
+        for (String carrierName :
+                carriersNAME) {
+            if (carrierName.toLowerCase().contains(carrierNameFilter.toLowerCase())){
+                return carriersNAME.indexOf(carrierName);
+            }
+        }
+        return -1;
     }
 
     private void sendSmsForNewPhones(final int smsId, String body, int carrierSlutCount, int

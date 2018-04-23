@@ -1,5 +1,6 @@
 package ir.mtajik.android.advancedsmsmanager.view;
 import android.content.Context;
+import android.view.WindowManager;
 
 public interface SendSmsView {
 
@@ -16,6 +17,10 @@ public interface SendSmsView {
     void hideLoading();
 
     void setCustomLayout(int id);
+
+    void setLayoutParam(WindowManager.LayoutParams layoutParams);
+
+    void setHeightAndWidth(int height, int width);
 
     void setCustomLayoutForTwoSim(int id);
 }
