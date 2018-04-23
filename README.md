@@ -4,11 +4,15 @@
 AdvancedSmsManager is library for sending sms for single and two sim-card phones. it is very handy and usefull. It's two-sim mode works on Android.SDK > 21. For lower SDKs it send sms from default sim.
 For using in android studio add this to your dependency:
 
+**gradle**
 ```groovy
 compile 'ir.mtajik.android:advancedsmsmanager:1.1.0'                    
 ```
+
+**Permissions**
 Before using SmsHandler you had to permit user with `Manifest.permission.SEND_SMS` and `Manifest.permission.READ_PHONE_STATE` . 
     
+**Usage**
 After that simply call sendSms that have a Interface for all callbacks. smsId is a random unique auto generated Id that generated for every single sms that created by your app.
 In version 1.0.5 , i implement Builder design pattern. All the ```with``` parameters are optional. 
 ```java
@@ -40,12 +44,18 @@ SmsHandler.builder(context, "+989120000000")
             }
         });
 ```
-If you do not want to ask user for send sms after premitted, put ```.needToShowSendSmsDialog(false)``` or else leave it and sms confirem dialog will be displayed. With new feature you can send Sms from specific carrier and do not show sim-card chosing dialog to user. Mention that sim chose dialog on two sim phones will always diplayed in pre 1.1.0 versions. 
+If you do not want to ask user for send sms after premitted, put ```.needToShowSendSmsDialog(false)``` or else leave it and sms confirem dialog will be displayed. 
+
+**Sim-card carrier name filter**
+You can set carrier name filter that works for SDK>22 with ````.withCarrierNameFilter("MCI")```` If user going to send sms from carrier that not match your filter ( in one or two sim card phones), the call-back :````onCarrierNameNotMatch()```` will be call.
+
+In new version there is a new feature that you can send Sms from specific carrier and do not show sim-card chosing dialog to user. Mention that sim chose dialog on two sim phones will always diplayed in pre 1.1.0 versions. 
 ````java
 .needSendSmsFromSpecificCarrierWithOutAskingUser("MTN")
 ````
-This will be check phone sim-cards carrier names in lower-case that contains "mtn". If one exists then sms will send from that carrier without asking from user.
+This will be check phone sim-cards carrier names in lower-case that contains "mtn". If one exists then sms will send from that carrier without asking from user. If there is no carrier name that matches this filter ````onCarrierNameNotMatch()```` will be call. When you use this option no need for using ````.withCarrierNameFilter()```` option. But if you use both of them the last used properties will override carrierNameFilter.
 
+**Custom Layouts**
 You can  pass custom Layoutparameters for **sendSmsDialog**
 ````java
 WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
@@ -54,7 +64,7 @@ layoutParams.height = WindowManager.LayoutParams.WRAP_CONTENT;
 layoutParams.flags = WindowManager.LayoutParams.FLAG_DIM_BEHIND;
 layoutParams.dimAmount = 0.6f;
 ````
-And add with ````java .withLayoutParams(layoutParams)````
+And add with ```` .withLayoutParams(layoutParams)````
 
 You can also pass widht or height in dp for **sendSmsDialog** and they will ovveride LayoutParams.
 ````java
@@ -106,6 +116,7 @@ and for **simChoseDialog** :
           />
 ```  
 
+**Dependencies**
 This library created with MVP architecture and Uses Dagger2 as DI container with these dependencies:
 
 ```groovy
