@@ -1,4 +1,6 @@
 [ ![Download](https://api.bintray.com/packages/mahdi/maven/advancedsmsmanager/images/download.svg) ](https://bintray.com/mahdi/maven/advancedsmsmanager/_latestVersion)
+
+![advancedSmsManager](http://www.mahditajik.ir/wp-content/uploads/2017/11/mahditajik.ir_lib_image.jpg)
 	
 # Advanced Sms Manager
 AdvancedSmsManager is library for sending sms for single and two sim-card phones. it is very handy and usefull. It's two-sim mode works on Android.SDK > 21. For lower SDKs it send sms from default sim.
