@@ -45,19 +45,21 @@ If you do not want to ask user for send sms after premitted, put ```.needToShowS
 .needSendSmsFromSpecificCarrierWithOutAskingUser("MTN")
 ````
 This will be check phone sim-cards carrier names in lower-case that contains "mtn". If one exists then sms will send from that carrier without asking from user.
-You can  pass custom Layoutparameters **sendSmsDialog**
+
+You can  pass custom Layoutparameters for **sendSmsDialog**
 ````java
-        WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
-        layoutParams.width = WindowManager.LayoutParams.MATCH_PARENT;
-        layoutParams.height = WindowManager.LayoutParams.WRAP_CONTENT;
-        layoutParams.flags = WindowManager.LayoutParams.FLAG_DIM_BEHIND;
-        layoutParams.dimAmount = 0.6f;
+WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
+layoutParams.width = WindowManager.LayoutParams.MATCH_PARENT;
+layoutParams.height = WindowManager.LayoutParams.WRAP_CONTENT;
+layoutParams.flags = WindowManager.LayoutParams.FLAG_DIM_BEHIND;
+layoutParams.dimAmount = 0.6f;
 ````
 And add with ````java .withLayoutParams(layoutParams)````
+
 You can also pass widht or height in dp for **sendSmsDialog** and they will ovveride LayoutParams.
 ````java
-                .withHeight(200) // 200dp
-                .withHeight(800) // 800dp
+.withHeight(200) // 200dp
+.withHeight(800) // 800dp
 ````
 
 
